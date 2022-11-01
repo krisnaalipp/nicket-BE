@@ -1,27 +1,29 @@
 const { ObjectId } = require('mongodb');
 const { getDatabase } = require('../config/mongoConnection');
 
-class News {
-  static news() {
+class User {
+  static users() {
     const db = getDatabase()
     
-    const news = db.collection('news')
+    const user = db.collection('users')
     
-    return news
+    return user
   }
   static async findAll() {
     try {
-      const news = this.news()
-      const result = await news.find().toArray()
+      const user = this.users()
+      const result = await user.find({}, {
+        projection: { password: 0 }
+      }).toArray()
       return result
     } catch (error) {
       throw error
     }
   }
-  static async create(inputNews) {
+  static async create(inputUser) {
     try {
-      const news = this.news()
-      const result = await news.insertOne(inputNews)
+      const user = this.users()
+      const result = await user.insertOne(inputUser)
       return result
     } catch (error) {
       throw error
@@ -30,8 +32,8 @@ class News {
   }
   static async findOne(id) {
     try {
-      const news = this.news()
-      const result = await news.findOne({
+      const user = this.users()
+      const result = await user.findOne({
         _id: ObjectId(id)
       },{
         projection: { password: 0 }
@@ -44,8 +46,8 @@ class News {
   }
   static async destroy(id){
     try {
-      const news = this.news()
-      const result = await news.deleteOne({
+      const user = this.users()
+      const result = await user.deleteOne({
         _id: ObjectId(id)
       })
       return result
@@ -56,4 +58,4 @@ class News {
 }
 
 
-module.exports = News
+module.exports = User

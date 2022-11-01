@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router()
+const newsController = require('../controllers/newsController');
 
-router.get('/')
-router.post('/')
-router.get('/:newsId')
-router.delete('/:newsId')
+router.get('/',newsController.readAllNews)
+router.post('/',newsController.addNewNews)
+router.get('/:newsId',newsController.getNewsById)
+router.delete('/:newsId',newsController.deleteNews)
 
 
 

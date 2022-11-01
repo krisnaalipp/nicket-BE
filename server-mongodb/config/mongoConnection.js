@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://ilham:arfanfauzan22@cluster0.ctcj3kj.mongodb.net/?retryWrites=true&w=majority"
-const dbName = "challenge-2"
+const uri = "mongodb+srv://finalproject:semogalancar@cluster0.ymaqnui.mongodb.net/?retryWrites=true&w=majority"
+const dbName = "p3-final-project"
 const client = new MongoClient(uri);
 let db;
 
