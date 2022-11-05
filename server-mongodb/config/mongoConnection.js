@@ -7,6 +7,10 @@ let db;
 async function connect(params) {
   try {
     await client.connect();
+    
+    if(process.env.NODE_ENV === 'test'){
+      dbName = "p3-final-project-test"
+    }
     const dbConnection = client.db(dbName);
     console.log('connect to database')
     db = dbConnection

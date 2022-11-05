@@ -1,59 +1,29 @@
-const { ObjectId } = require('mongodb');
-const { getDatabase } = require('../config/mongoConnection');
+const mongoose = require('mongoose');
 
-class News {
-  static news() {
-    const db = getDatabase()
-    
-    const news = db.collection('news')
-    
-    return news
-  }
-  static async findAll() {
-    try {
-      const news = this.news()
-      const result = await news.find().toArray()
-      return result
-    } catch (error) {
-      throw error
-    }
-  }
-  static async create(inputNews) {
-    try {
-      const news = this.news()
-      const result = await news.insertOne(inputNews)
-      return result
-    } catch (error) {
-      throw error
-    }
+const newsSchema = mongoose.Schema({
+  title: {
+    type: String,
+    required : [true,'title is required'],
+  },
+  imgUrl: {
+    type: String,
+    required : [true,'imgUrl is required'],
+  },
+  description: {
+    type: String,
+    required : [true,'description is required'],
+  },
+  tags: {
+    type: String,
+    required : [true,'tags is required'],
+  },
 
+},
+  {
+    timestamps: true
   }
-  static async findOne(id) {
-    try {
-      const news = this.news()
-      const result = await news.findOne({
-        _id: ObjectId(id)
-      },{
-        projection: { password: 0 }
-      })
-      return result
-    } catch (error) {
-      throw error
-    }
-  
-  }
-  static async destroy(id){
-    try {
-      const news = this.news()
-      const result = await news.deleteOne({
-        _id: ObjectId(id)
-      })
-      return result
-    } catch (error) {
-      throw error
-    }
-  }
-}
+)
 
+const News = mongoose.model('News',newsSchema)
 
 module.exports = News

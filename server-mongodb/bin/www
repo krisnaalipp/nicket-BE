@@ -1,0 +1,13 @@
+const mongoose = require('mongoose');
+const port = 4000
+let uri = "mongodb+srv://finalproject:semogalancar@cluster0.ymaqnui.mongodb.net/running?retryWrites=true&w=majority"
+const app = require('../app');
+
+mongoose.connect(uri,{useNewUrlParser:true})
+.then(()=> {
+  if(process.env.NODE_ENV !== 'test'){
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`)
+    })
+  }
+})
