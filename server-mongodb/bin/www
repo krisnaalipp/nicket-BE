@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const port = 4000
+const port = process.env.PORT || 4000
 let uri = "mongodb+srv://finalproject:semogalancar@cluster0.ymaqnui.mongodb.net/running?retryWrites=true&w=majority"
 const app = require('../app');
 

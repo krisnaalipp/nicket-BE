@@ -14,11 +14,18 @@ const adminTypeDefs = `#graphql
   type Message {
     message:String
   }
+  type LoginResponse{
+    access_token:String
+  }
   
   input AdminInput {
     username:String!
     email:String!
     password:String!
+  }
+  input LoginInput{
+    email:String
+    password:String
   }
 
   type Query {
@@ -29,6 +36,7 @@ const adminTypeDefs = `#graphql
   type Mutation {
     createAdmin(inputAdmin: AdminInput) : Message
     deleteAdmin(_id : String!) : Message
+    loginAdmin(inputLogin:LoginInput):LoginResponse
   }
 `
 
@@ -38,7 +46,6 @@ const adminRevolvers = {
     getAdmin : async () => {
       try {
         let adminCache = await redis.get('cache:admin')
-        
         if(adminCache){
           const data = JSON.parse(adminCache)
           return data
@@ -80,7 +87,16 @@ const adminRevolvers = {
       } catch (error) {
         throw error
       }
-    }
+    },
+    loginAdmin: async (_,args) => {
+      try {
+        const {inputLogin} = args
+        const {data} = await axios.post(`${baseUrl}/login`,inputLogin)
+        return data
+      } catch (error) {
+        throw error
+      }
+    } 
   }
 }
 

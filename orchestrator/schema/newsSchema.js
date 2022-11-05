@@ -10,17 +10,15 @@ const newsTypeDefs = `#graphql
     imgUrl:String
     description:String
     tags:String
-    createdAt:Date
   }
   type Message {
     message:String
   }
-  type InputNews {
+  input InputNews {
     title:String
     imgUrl:String
     description:String
     tags:String
-    createdAt:Date
   }
 
   type Query {
@@ -37,7 +35,7 @@ const newsResolvers = {
   Query : {
     getNews : async() => {
       try {
-        const newsCache = redis.get('news:cache')
+        let newsCache = await redis.get('news:cache')
         if(newsCache){
           const data = JSON.parse(newsCache)
           return data
@@ -48,6 +46,7 @@ const newsResolvers = {
         }
         
       } catch (error) {
+        console.log(error)
         throw error
       }
     },
@@ -66,7 +65,7 @@ const newsResolvers = {
       try {
         const {id} = args
         const {data} = await axios.delete(`${baseUrl}/${id}`)
-        await redis.del('items:cache')
+        await redis.del('news:cache')
         return data
       } catch (error) {
         throw error
@@ -76,7 +75,7 @@ const newsResolvers = {
       try {
         const {inputNews} = args
         const {data} = await axios.post(`${baseUrl}`,inputNews)
-        await redis.del('items:cache')
+        await redis.del('news:cache')
         return data
       } catch (error) {
         throw error
