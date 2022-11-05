@@ -1,7 +1,7 @@
 const redis = require('../config/redisConnection');
 const axios = require('axios');
 
-const baseUrl = 'http://localhost:4000/news'
+const baseUrl = 'https://nribun-services-user.herokuapp.com/news'
 
 const newsTypeDefs = `#graphql
   type News {

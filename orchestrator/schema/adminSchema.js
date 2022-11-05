@@ -1,7 +1,7 @@
 const redis = require('../config/redisConnection');
 const axios = require('axios');
 
-const baseUrl = 'http://localhost:4000/admin'
+const baseUrl = 'https://nribun-services-user.herokuapp.com/admin'
 
 
 
