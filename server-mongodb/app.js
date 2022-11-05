@@ -1,23 +1,33 @@
 const express = require('express')
 const router = require('./routes')
 const app = express()
-const port = 4000
-const mongoconnection = require('./config/mongoConnection');
-
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.use('/',router)
+let uri = "mongodb+srv://finalproject:semogalancar@cluster0.ymaqnui.mongodb.net/running?retryWrites=true&w=majority"
 
-mongoconnection.connect()
-.then(()=> {
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-  })
-})
+// if(process.env.NODE_ENV === 'test'){
+//   uri = "mongodb+srv://finalproject:semogalancar@cluster0.ymaqnui.mongodb.net/test?retryWrites=true&w=majority"
+// }
+
+// mongoose.connect(uri,{useNewUrlParser:true})
+// .then(()=> {
+//   if(process.env.NODE_ENV !== 'test'){
+//     app.listen(port, () => {
+//       console.log(`Example app listening on port ${port}`)
+//     })
+//   }
+// })
+
+module.exports = app
+
+
+// mongoconnection.connect()
+// .then(()=> {
+//   app.listen(port, () => {
+//     console.log(`Example app listening on port ${port}`)
+//   })
+// })
 

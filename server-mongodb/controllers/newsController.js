@@ -1,12 +1,12 @@
-const News = require('../models/news');
+const News = require('../models/news2');
 
 class Controller {
   static async readAllNews(req,res){
     try {
-      let result = await News.findAll()
+      let result = await News.find()
       res.status(200).json(result)
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error.message)
     }
   }
   static async addNewNews (req,res){
@@ -20,30 +20,36 @@ class Controller {
       res.status(201).json({message : 'Success create a new News'})
     } catch (error) {
       console.log(error)
-      res.status(500).json(error)
+      if(error.name === 'ValidationError'){
+        const errors = Object.values(error.errors).map((el) => el.message);
+        res.status(400).json({message : `${errors}`})
+      }else {
+        res.status(500).json(error.message)
+      } 
+      
     }
   }
   static async getNewsById(req,res){
     try {
       const {newsId} = req.params
-      const user = await News.findOne(id)
+      const user = await News.findById(newsId)
       if(!user){
         return res.status(404).json({message : 'News Not Found'})
       }
       res.status(200).json(user)
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error.message)
     }
   }
   static async deleteNews (req,res) {
     try {
       const {newsId} = req.params
-      const user = await News.findOne(id)
+      const user = await News.findOne(newsId)
       if(!user){
         return res.status(404).json({message : 'News Not Found'})
       }
-      await News.destroy(id)
-      res.status(200).json({message : 'Successfully delete News'})
+      const deletedNews = await News.findByIdAndRemove(newsId)
+      res.status(200).json(deletedNews)
     } catch (error) {
       res.status(500).json(error)
     }
