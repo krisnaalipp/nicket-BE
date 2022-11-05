@@ -19,16 +19,12 @@ class Controller {
       await Admin.create(userInput)
       res.status(201).json({message : 'Success create a new Admin'})
     } catch (error) {
-      console.log(error)
       if(error.name === 'ValidationError'){
         const errors = Object.values(error.errors).map((el) => el.message);
         res.status(400).json({message : `${errors}`})
-      }else if(error.name ==='MongoServerError'){
-        res.status(400).json({message : 'Email already used'})
       }else {
-        res.status(500).json(error)
+        res.status(500).json(error.message)
       }
-     
     }
   }
   static async getUserById(req,res){
@@ -47,15 +43,11 @@ class Controller {
     try {
       const {adminId} = req.params
       const user = await Admin.findById(adminId)
-      if(!user){
-        return res.status(404).json({message : 'Admin Not Found'})
-      }
       const deletedUser = await Admin.findByIdAndRemove(adminId,{
         returnOriginal : true
       })
       res.status(200).json(deletedUser)
     } catch (error) {
-      console.log(error)
       res.status(500).json(error.message)
     }
   }
@@ -65,21 +57,21 @@ class Controller {
       if(!email || !password){
         return res.status(400).json({message : 'Invalid input'})
       }
-      const userLogin = await Admin.login(email)
+      const userLogin = await Admin.findOne({email})
       if(!userLogin){
-        return res.status(400).json({message : 'Wrong email/ password'})
+        return res.status(401).json({message : 'Wrong email/ password'})
       }
-      const isValid = comparePassword(password,userLogin.password)
+      const isValid = comparePassword(userLogin.password,password)
       if(!isValid){
-        return res.status(400).json({message : 'Wrong email/ password'})
+        return res.status(401).json({message : 'Wrong email/ password'})
       }
       const payload = {
-        email : payload.email
+        email : userLogin.email
       }
       const access_token = signToken(payload)
       res.status(200).json({access_token})
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error.message)
     }
   }
 }

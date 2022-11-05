@@ -2,7 +2,8 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../app');
 const Admin = require('../models/admin');
-const { dbConnect, dbDisconnect } = require('../config/connectionTest');
+const{ signToken,verifyToken } = require('../helpers/jwt'); ;
+
 
 const inputUser = () => {
   return {
@@ -31,12 +32,12 @@ afterEach(async()=> {
   // await Admin.deleteMany()
 })
 
-afterAll(async()=> {
-  // await dbDisconnect()
-  //
-  await mongoose.connection.dropDatabase()
-  await mongoose.connection.close()
-})
+// afterAll(async()=> {
+//   // await dbDisconnect()
+//   //
+//   await mongoose.connection.dropDatabase()
+//   await mongoose.connection.close()
+// })
 
 
 describe ('Admin API endpoint' , () => {
@@ -96,6 +97,16 @@ describe ('Admin API endpoint' , () => {
       expect(res.statusCode).toEqual(400);
       expect(res.body).toHaveProperty('message')
     })
+    test('error register admin input invalid email',async()=> {
+      const mockUser = inputUser()
+      const res = await request(app).post("/admin").send({
+        username: mockUser.username,
+        email: "invalid",
+        password: mockUser.password,
+      });
+      expect(res.statusCode).toEqual(400);
+      expect(res.body).toHaveProperty('message')
+    })
     test('error empty field username',async()=>{
       const mockUser = inputUser()
       const res = await request(app).post("/admin").send({
@@ -123,6 +134,13 @@ describe ('Admin API endpoint' , () => {
       expect(res.statusCode).toEqual(400);
       expect(res.body).toHaveProperty('message')
     })
+    test("Failed 500", async () => {
+      const mockAdmin = inputUser();
+      jest.spyOn(Admin, 'create').mockRejectedValue(new Error("test add admin error 500"));
+      const res = await request(app).post("/admin").send(mockAdmin);
+      expect(res.statusCode).toEqual(500);
+      expect(res.body).toEqual("test add admin error 500");
+    });
   })
 
   describe ('Delete /admin',()=> {
@@ -130,8 +148,69 @@ describe ('Admin API endpoint' , () => {
       const admin = await Admin.create(inputUser());
       const res = await request(app).delete(`/admin/${admin.id}`).send();
       expect(res.statusCode).toEqual(200);
-      deletedUser = await Admin.findById(admin.id)
+      let deletedUser = await Admin.findById(admin.id)
       expect(deletedUser).toBeNull();
     })
+    test("Failed delete admin 500", async () => {
+      const admin = await Admin.create(inputUser());
+      jest.spyOn(Admin, 'findByIdAndRemove').mockRejectedValue(new Error('test error 500'));
+      const res = await request(app).delete(`/admin/${admin.id}`).send();
+      expect(res.statusCode).toEqual(500);
+    });
   })
+
+    describe('Admin / login' , ()=> {
+      test("successful", async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        const res = await request(app).post("/login").send({email: mockAdmin.email, password: mockAdmin.password});
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.access_token).toBeTruthy();
+      });
+      test("failed invalid input ", async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        const res = await request(app).post("/login").send({ password: mockAdmin.password});
+        expect(res.statusCode).toEqual(400);
+        expect(res.body).toHaveProperty('message')
+      });
+      test("failed invalid input ", async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        const res = await request(app).post("/login").send({ email: mockAdmin.email});
+        expect(res.statusCode).toEqual(400);
+        expect(res.body).toHaveProperty('message')
+      });
+      test("failed wrong email ", async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        const res = await request(app).post("/login").send({ email: 'invalid@mail.com',password: mockAdmin.password});
+        expect(res.statusCode).toEqual(401);
+        expect(res.body).toHaveProperty('message')
+      });
+      test("failed wrong password ", async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        const res = await request(app).post("/login").send({ email: mockAdmin.email,password: 'invalipassword'});
+        expect(res.statusCode).toEqual(401);
+        expect(res.body).toHaveProperty('message')
+      });
+      test("Failed 500 login error", async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        jest.spyOn(Admin, 'findOne').mockRejectedValue(new Error('test error 500 failed login'))
+        const res = await request(app).post("/login").send({email: mockAdmin.email, password: mockAdmin.password});
+        expect(res.statusCode).toEqual(500);
+        expect(res.body).toEqual('test error 500 failed login');
+      });
+      test('verifyToken jwt helpers', async () => {
+        const mockAdmin = inputUser();
+        const admin = await Admin.create(mockAdmin);
+        mockAdmin.id = admin.id;
+        const token = signToken(mockAdmin);
+        const payload = verifyToken(token);
+        expect(payload.email).toBe(mockAdmin.email);
+      });
+    })
+
 })
