@@ -54,6 +54,7 @@ class Controller {
   static async login (req,res) {
     try {
       const {email,password} = req.body
+      
       if(!email || !password){
         return res.status(400).json({message : 'Invalid input'})
       }

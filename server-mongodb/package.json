@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test && npx jest --coverage --verbose --runInBand --forceExit"
+    "test": "set NODE_ENV=test && npx jest --coverage --verbose --runInBand --forceExit",
+    "start" : "node bin/www"
   },
   "keywords": [],
   "author": "",
