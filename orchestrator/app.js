@@ -3,15 +3,18 @@ const {startStandaloneServer} = require('@apollo/server/standalone');
 const {ApolloServer} = require('@apollo/server');
 const {adminTypeDefs,adminRevolvers} = require('./schema/adminSchema');
 const {newsTypeDefs,newsResolvers} = require('./schema/newsSchema');
+const {matchTypeDefs,matchResolvers} = require('./schema/matchSchema');
 
 const server = new ApolloServer({
   typeDefs : [
    adminTypeDefs,
-   newsTypeDefs
+   newsTypeDefs,
+   matchTypeDefs
   ],
   resolvers : [
     adminRevolvers,
-    newsResolvers
+    newsResolvers,
+    matchResolvers
   ],
   introspection: true,
   playground: true,
