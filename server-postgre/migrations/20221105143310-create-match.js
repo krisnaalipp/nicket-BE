@@ -10,15 +10,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       opponent: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       opponentLogo: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       startDate: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       availableSeats: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         defaultValue : 500
       },

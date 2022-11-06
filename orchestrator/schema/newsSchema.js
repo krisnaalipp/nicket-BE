@@ -10,6 +10,7 @@ const newsTypeDefs = `#graphql
     imgUrl:String
     description:String
     tags:String
+    createdAt:String
   }
   type Message {
     message:String
