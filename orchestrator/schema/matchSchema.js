@@ -1,7 +1,7 @@
 const redis = require('../config/redisConnection');
 const axios = require('axios');
 
-const baseUrl = 'http://localhost:4003/match'
+const baseUrl = 'https://nicket-services-app.herokuapp.com/match'
 
 const matchTypeDefs = `#graphql
   type Match {
@@ -29,6 +29,7 @@ const matchTypeDefs = `#graphql
   type Query {
     getMatch:[Match]
     getMatchById(id:ID): Match
+    getOneMatch: Match
   }
   type Mutation {
     updateResult(id:ID,inputResult:InputResult):Message
@@ -62,6 +63,14 @@ const matchResolvers = {
       try {
         const {id} = args
         const {data} = await axios.get(`${baseUrl}/${id}`)
+        return data
+      } catch (error) {
+        throw error
+      }
+    },
+    getOneMatch: async () => {
+      try {
+        const {data} = await axios.get(`${baseUrl}/limit`)
         return data
       } catch (error) {
         throw error

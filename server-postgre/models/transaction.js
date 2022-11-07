@@ -12,18 +12,44 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Transaction.belongsTo(models.Match)
+      Transaction.hasMany(models.Seat)
     }
   }
   Transaction.init({
-    ktp: DataTypes.STRING,
-    email: DataTypes.STRING,
+    ktp: {
+      type :DataTypes.STRING,
+      allowNull:false,
+      validate: {
+        notNull: {
+          msg: 'KTP is required'
+        },
+        notEmpty: {
+          msg: 'KTP is required'
+        }
+      }
+    },
+    email: {
+      type :DataTypes.STRING,
+      allowNull:false,
+      validate: {
+        notNull: {
+          msg: 'Email is required'
+        },
+        notEmpty: {
+          msg: 'Email is required'
+        }
+      }
+    },
     categorySeat: DataTypes.STRING,
-    isPaid: DataTypes.BOOLEAN,
+    isPaid: {
+      type : DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     MatchId: DataTypes.INTEGER,
-    paymentUrl: DataTypes.STRING,
     ticketPrice: DataTypes.INTEGER,
     amount: DataTypes.INTEGER
-  }, {
+  },
+  {
     sequelize,
     modelName: 'Transaction',
   });
