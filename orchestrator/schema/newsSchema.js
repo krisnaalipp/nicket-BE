@@ -25,6 +25,7 @@ const newsTypeDefs = `#graphql
   type Query {
     getNews: [News]
     newsById(id:String) : News
+    getNewsLimit:[News]
   }
   type Mutation {
     deleteNews(id:String): Message
@@ -48,6 +49,14 @@ const newsResolvers = {
         
       } catch (error) {
         console.log(error)
+        throw error
+      }
+    },
+    getNewsLimit : async() => {
+      try {
+          const {data} = await axios.get(`${baseUrl}/limit`)
+          return data
+      } catch (error) {
         throw error
       }
     },

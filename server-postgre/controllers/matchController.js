@@ -9,6 +9,21 @@ class Controller {
       next(error)
     }
   }
+  static async oneMatch(req,res,next){
+    try {
+      const matches = await Match.findAll({
+        where : {
+          result : 'Not Started'
+        },
+        order :[['startDate','ASC']],
+        limit : 1
+      })
+      res.status(200).json(matches[0])
+    } catch (error) {
+      console.log(error)
+      next(error)
+    }
+  }
   static async matchById (req,res,next){
     try {
       const {matchId} = req.params

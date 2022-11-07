@@ -9,6 +9,16 @@ class Controller {
       res.status(500).json(error.message)
     }
   }
+  static async readLimitedNews(req, res) {
+    try {
+      let result = await News.find({published: true})
+      .sort({'createdAt': 'asc'})
+      .limit(3)
+      res.status(200).json(result)
+    } catch (error) {
+      res.status(500).json(error.message)
+    }
+  }
   static async addNewNews(req, res) {
     try {
       const { title, imgUrl, description, tags } = req.body
