@@ -1,6 +1,6 @@
 FROM node:latest
 WORKDIR /server-postgre
-ENV PORT = 4003
+ENV NODE_ENV=production
 COPY package.json package-lock.json ./
 RUN npm install && npm cache clean --force
 COPY ./ ./
