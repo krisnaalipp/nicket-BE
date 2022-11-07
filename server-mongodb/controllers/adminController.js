@@ -19,10 +19,12 @@ class Controller {
       await Admin.create(userInput)
       res.status(201).json({message : 'Success create a new Admin'})
     } catch (error) {
+      console.log(error)
       if(error.name === 'ValidationError'){
         const errors = Object.values(error.errors).map((el) => el.message);
         res.status(400).json({message : `${errors}`})
       }else {
+        
         res.status(500).json(error.message)
       }
     }

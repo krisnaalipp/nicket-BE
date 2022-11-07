@@ -1,7 +1,8 @@
 const redis = require('../config/redisConnection');
 const axios = require('axios');
 
-const baseUrl = 'https://nribun-services-user.herokuapp.com/admin'
+// const baseUrl = 'https://nribun-services-user.herokuapp.com/admin'
+const baseUrl = 'http://localhost:4000/admin'
 
 
 
@@ -70,8 +71,8 @@ const adminRevolvers = {
   Mutation: {
     createAdmin : async (_,args) => {
       try {
-        const {inputUser} = args
-        const {data} = await axios.post(baseUrl,inputUser)
+        const {inputAdmin} = args
+        const {data} = await axios.post(baseUrl,inputAdmin)
         await redis.del('cache:admin')
         return data
       } catch (error) {
