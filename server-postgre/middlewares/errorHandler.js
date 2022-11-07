@@ -7,6 +7,9 @@ const errorHandler = (err,req,res,next) => {
   }else if (err.name === "Match Not Found"){
     code = 404,
     message = "Match not found"
+  }else if (err.name === "Transaction Not Found"){
+    code = 404,
+    message = "Transaction not found"
   }else {
     code = 500
     message = "Internal Server Error"

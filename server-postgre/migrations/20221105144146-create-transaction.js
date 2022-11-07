@@ -28,9 +28,6 @@ module.exports = {
           key : 'id'
         },
       },
-      paymentUrl: {
-        type: Sequelize.STRING
-      },
       ticketPrice: {
         type: Sequelize.INTEGER
       },

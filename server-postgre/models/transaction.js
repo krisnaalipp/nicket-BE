@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Transaction.belongsTo(models.Match)
+      Transaction.hasMany(models.Seat)
     }
   }
   Transaction.init({
@@ -45,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     MatchId: DataTypes.INTEGER,
-    paymentUrl: DataTypes.STRING,
     ticketPrice: DataTypes.INTEGER,
     amount: DataTypes.INTEGER
   },
