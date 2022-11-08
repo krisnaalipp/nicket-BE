@@ -44,6 +44,9 @@ const transactionTypeDefs = `#graphql
     message:String
     id:ID
   }
+  type MessageUpdate{
+    message:String
+  }
   type PostOrder{
     transactionToken:String
   }
@@ -67,9 +70,9 @@ const transactionTypeDefs = `#graphql
     getTransactionDetail(id:ID):TransactionDetail
   }
   type Mutation {
-    createTransaction(inputTransaction:InputTransaction):Message
+    createTransaction(inputTransaction:InputTransaction):MessageTransaction
     postOrder(id:ID):PostOrder
-    updateTransaction(updateTransaction:UpdateTransactiom):Message
+    updateTransaction(updateTransaction:UpdateTransactiom):MessageUpdate
   }
 `
 
