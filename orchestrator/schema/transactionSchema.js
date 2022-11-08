@@ -17,6 +17,26 @@ const transactionTypeDefs = `#graphql
     createdAt:String
     Seats:[Seat]
   }
+ 
+  type TransactionDetail {
+    id:ID
+    ktp:String
+    email:String
+    categorySeat:String 
+    ticketPrice:Int
+    amount:Int,
+    MatchId:Int
+    isPaid:Boolean
+    createdAt:String
+    Seats:[Seat]
+    Match:MatchDetail
+  }
+  type MatchDetail {
+    id:ID
+    opponent:String
+    opponentLogo:String
+    startDate:String
+  }
   type Seat {
     seatNumber:String 
   }
@@ -44,7 +64,7 @@ const transactionTypeDefs = `#graphql
   }
   type Query {
     getTransaction:[Transaction]
-    getTransactionDetail(id:ID):Transaction
+    getTransactionDetail(id:ID):TransactionDetail
   }
   type Mutation {
     createTransaction(inputTransaction:InputTransaction):Message
@@ -76,6 +96,7 @@ const transactionResolvers = {
       try {
         const {id} = args
         const {data} = await axios.get(`${baseUrl}/${id}`)
+        console.log(data)
         return data
       } catch (error) {
         throw error

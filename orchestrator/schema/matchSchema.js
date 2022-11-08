@@ -2,6 +2,7 @@ const redis = require('../config/redisConnection');
 const axios = require('axios');
 
 const baseUrl = 'https://nicket-services-app.herokuapp.com/match'
+// const baseUrl = 'http://localhost:4003/match'
 
 const matchTypeDefs = `#graphql
   type Match {

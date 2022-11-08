@@ -1,6 +1,6 @@
 const midtransClient = require('midtrans-client');
 const processPayment = require('../helpers/nodemailer');
-const {Transaction, sequelize,Seat} = require('../models');
+const {Transaction, sequelize,Seat,Match} = require('../models');
 
 class Controller {
   static async postTransaction(req, res, next) {
@@ -35,7 +35,7 @@ class Controller {
     try {
       const {transactionId} = req.params
       const availTransaction = await Transaction.findByPk(transactionId,{
-        include : Seat
+        include : [Seat,Match]
       })
       if(!availTransaction){
         throw {name : 'Transaction Not Found'}
