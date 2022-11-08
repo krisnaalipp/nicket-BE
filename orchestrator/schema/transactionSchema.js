@@ -1,8 +1,8 @@
 const redis = require('../config/redisConnection');
 const axios = require('axios');
 
-// const baseUrl = 'https://nicket-services-app.herokuapp.com/order'
-const baseUrl = 'http://localhost:4003/order'
+const baseUrl = 'https://nicket-services-app.herokuapp.com/order'
+// const baseUrl = 'http://localhost:4003/order'
 
 const transactionTypeDefs = `#graphql
   type Transaction {
