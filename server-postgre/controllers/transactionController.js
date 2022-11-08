@@ -14,7 +14,7 @@ class Controller {
       })
       await Seat.bulkCreate(seatsInput,{transaction:t})
       await t.commit()
-      res.status(200).json({ message : "succes buy please confirm your payment" })
+      res.status(200).json({ message : "succes buy please confirm your payment" , id:newTransaction.id })
     } catch (error) {
       await t.rollback()
       next(error)
