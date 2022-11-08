@@ -40,7 +40,7 @@ const transactionTypeDefs = `#graphql
   type Seat {
     seatNumber:String 
   }
-  type Message {
+  type MessageTransaction {
     message:String
     id:ID
   }
