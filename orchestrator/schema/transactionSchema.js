@@ -68,6 +68,7 @@ const transactionTypeDefs = `#graphql
   type Query {
     getTransaction:[Transaction]
     getTransactionDetail(id:ID):TransactionDetail
+    getTransactionByMatch(id:ID):[Transaction]
   }
   type Mutation {
     createTransaction(inputTransaction:InputTransaction):MessageTransaction
@@ -99,8 +100,25 @@ const transactionResolvers = {
       try {
         const {id} = args
         const {data} = await axios.get(`${baseUrl}/${id}`)
-        console.log(data)
         return data
+      } catch (error) {
+        throw error
+      }
+    },
+    getTransactionByMatch : async (_,args) => {
+      
+      try {
+        let TransactionCache = await redis.get('transactionMatch:cache')
+        if(TransactionCache){
+          const data = JSON.parse(TransactionCache)
+          return data
+        }else {
+        const {id} = args
+        const {data} = await axios.get(`${baseUrl}/match/${id}`)
+        await redis.set('transactionMatch:cache',JSON.stringify(data))
+        return data
+        }
+        
       } catch (error) {
         throw error
       }
@@ -115,8 +133,10 @@ const transactionResolvers = {
         }
         const {data} = await axios.post(`${baseUrl}`,input)
         await redis.del('transaction:cache')
+        await redis.del('transactionMatch:cache')
         return data
       } catch (error) {
+        console.log(error)
         throw error
       }
     },
@@ -125,6 +145,7 @@ const transactionResolvers = {
         const {inputTransaction} = args
         const {data} = await axios.post(`${baseUrl}/input`,inputTransaction)
         await redis.del('transaction:cache')
+        await redis.del('transactionMatch:cache')
         return data
       } catch (error) {
         throw error
@@ -135,6 +156,7 @@ const transactionResolvers = {
         const {updateTransaction} = args
         const {data} = await axios.post(`${baseUrl}/payment`,updateTransaction)
         await redis.del('transaction:cache')
+        await redis.del('transactionMatch:cache')
         return data
       } catch (error) {
         throw error

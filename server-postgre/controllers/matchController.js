@@ -20,7 +20,6 @@ class Controller {
       })
       res.status(200).json(matches[0])
     } catch (error) {
-      console.log(error)
       next(error)
     }
   }
@@ -33,7 +32,6 @@ class Controller {
       }
       res.status(200).json(match)
     } catch (error) {
-      console.log(error)
       next(error)
     }
   }

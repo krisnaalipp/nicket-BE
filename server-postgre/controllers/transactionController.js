@@ -7,14 +7,13 @@ class Controller {
     const t = await sequelize.transaction()
     try {
       const { ktp, email, categorySeat, ticketPrice , seat,MatchId } = req.body
-      console.log(req.body)
       const newTransaction = await Transaction.create({ktp, email, categorySeat, ticketPrice ,amount:seat.length,MatchId},{transaction : t})
       const seatsInput = seat.map(el=> {
         return {seatNumber : el.seatNumber ,TransactionId : newTransaction.id}
       })
       await Seat.bulkCreate(seatsInput,{transaction:t})
       await t.commit()
-      res.status(200).json({ message : "succes buy please confirm your payment" , id:newTransaction.id })
+      res.status(201).json({ message : "succes buy please confirm your payment" , id:newTransaction.id })
     } catch (error) {
       await t.rollback()
       next(error)
@@ -24,6 +23,21 @@ class Controller {
     try {
       const transactions = await Transaction.findAll({
         order : [['createdAt','ASC']],
+        include : Seat
+      })
+      res.status(200).json(transactions)
+    } catch (error) {
+      next(error)
+    }
+  }
+  static async transactionByMatch(req,res,next){
+    try {
+      const {matchId} = req.params
+      const transactions = await Transaction.findAll({
+        where : {
+          isPaid:true,
+          MatchId : matchId
+        },
         include : Seat
       })
       res.status(200).json(transactions)
@@ -42,7 +56,6 @@ class Controller {
       }
       res.status(200).json(availTransaction)
     } catch (error) {
-      console.log(error)
       next(error)
     }
   }
@@ -71,7 +84,7 @@ class Controller {
       }
       const transaction = await snap.createTransaction(parameter)
       // await processPayment(transaction.redirect_url)
-      res.status(200).json({ transactionToken: transaction.token })
+      res.status(201).json({ transactionToken: transaction.token })
     } catch (error) {
       console.log(error)
       next(error)
@@ -87,8 +100,10 @@ class Controller {
             id : TransactionId
           }
         })
+        res.status(200).json({message : 'OK'})
+      }else {
+        res.status(400).json({message:'Something Wrong'})
       }
-      res.status(200).json({message : 'OK'})
     } catch (error) {
       next(error)
     }

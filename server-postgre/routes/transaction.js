@@ -7,6 +7,7 @@ router.post('/',transactionController.postOrder)
 router.get('/',transactionController.allTransactions)
 router.post('/payment',transactionController.paymentHandler)
 router.get('/:transactionId',transactionController.transactionById)
+router.get('/match/:matchId', transactionController.transactionByMatch)
 
 
 
