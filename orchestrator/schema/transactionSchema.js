@@ -22,6 +22,7 @@ const transactionTypeDefs = `#graphql
   }
   type Message {
     message:String
+    id:ID
   }
   type PostOrder{
     transactionToken:String
