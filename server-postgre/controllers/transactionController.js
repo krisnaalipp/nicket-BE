@@ -33,7 +33,6 @@ class Controller {
   }
   static async transactionById (req,res,next){
     try {
-      console.log
       const {transactionId} = req.params
       const availTransaction = await Transaction.findByPk(transactionId,{
         include : Seat
@@ -71,7 +70,7 @@ class Controller {
           "bca_va","gopay"],
       }
       const transaction = await snap.createTransaction(parameter)
-      await processPayment(transaction.redirect_url)
+      // await processPayment(transaction.redirect_url)
       res.status(200).json({ transactionToken: transaction.token })
     } catch (error) {
       console.log(error)
