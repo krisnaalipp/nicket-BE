@@ -1,13 +1,16 @@
-const {Match} = require('../models');
+const {Match,Transaction} = require('../models');
 
 class Controller {
   static async allMatch(req,res,next){
     try {
       const matches = await Match.findAll({
+        include : Transaction,
         order :[['startDate','ASC']],
+        
       })
       res.status(200).json(matches)
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
@@ -17,8 +20,10 @@ class Controller {
         where : {
           result : 'Not Started'
         },
+        include : Transaction,
         order :[['startDate','ASC']],
-        limit : 1
+        limit : 1, 
+        
       })
       res.status(200).json(matches[0])
     } catch (error) {
