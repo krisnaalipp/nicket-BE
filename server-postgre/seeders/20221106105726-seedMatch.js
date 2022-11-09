@@ -11,6 +11,9 @@ module.exports = {
       if(!el.result){
         el.result = 'Not Started'
       }
+      if(!el.availableSeats){
+        el.availableSeats = 500
+      }
     })
     await queryInterface.bulkInsert('Matches',match,{})
     /**
