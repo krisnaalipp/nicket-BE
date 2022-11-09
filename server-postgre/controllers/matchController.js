@@ -33,7 +33,9 @@ class Controller {
   static async matchById (req,res,next){
     try {
       const {matchId} = req.params
-      const match = await Match.findByPk(matchId)
+      const match = await Match.findByPk(matchId,{
+        include : Transaction
+      })
       if (!match) {
         throw {name : 'Match Not Found'}
       }

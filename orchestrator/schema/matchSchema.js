@@ -12,6 +12,18 @@ const matchTypeDefs = `#graphql
     result:String
     startDate:String
     availableSeats:Int
+    Transactions:[Transaction]
+  }
+  type Transaction {
+    id:ID
+    ktp:String
+    email:String
+    categorySeat:String 
+    ticketPrice:Int
+    amount:Int,
+    MatchId:Int
+    isPaid:Boolean
+    createdAt:String
   }
   type Message {
     message: String
