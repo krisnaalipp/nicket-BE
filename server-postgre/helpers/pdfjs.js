@@ -69,6 +69,9 @@ const createPDF = async (url,data) => {
   let pay = 'belum dibayar'
   if (data.isPaid) {
     pay= 'sudah dibayar'
+    doc.setFont("courier", "normal");  
+    doc.setFontSize(100)
+    doc.text("LUNAS",110,130,null,35)
   }
   doc.text(`Status : ${pay}`,10,58)
 
