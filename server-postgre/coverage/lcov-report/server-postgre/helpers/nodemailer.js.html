@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/7</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/7</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -98,26 +98,15 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -125,47 +114,64 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const nodemailer = require("nodemailer");
+const { createPDF } = require("./pdfjs");
 &nbsp;
-async function <span class="fstat-no" title="function not covered" >processPayment(</span>payUrl) {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  let testAccount = <span class="cstat-no" title="statement not covered" >await nodemailer.createTestAccount();</span>
 &nbsp;
-  // create reusable transporter object using the default SMTP transport
-  let transporter = <span class="cstat-no" title="statement not covered" >nodemailer.createTransport({</span>
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+async function processPayment(payUrl,customerEmail) {
+&nbsp;
+  let transporter = nodemailer.createTransport({
+    service:'gmail',
+    host: "smtp.gmail.com",
+    port: 465,
     auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
+      user: 'admnicket8@gmail.com', // generated ethereal user
+      pass: 'xwbshnnwjbnsvelx', // generated ethereal password
     },
   });
 &nbsp;
-  // send mail with defined transport object
-  let info = <span class="cstat-no" title="statement not covered" >await transporter.sendMail({</span>
-    from: '"Fred Foo 👻" &lt;foo@example.com&gt;', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
+  let outputPdf = await createPDF(payUrl)
+&nbsp;
+  let message = {
+    from: '"Admin Nicket" &lt;admnicket8@gmail.com&gt;', // sender address
+    to: customerEmail, // list of receivers
     subject: "Menunggu Pembayaran", // Subject line
     text: `Segera lakukan pembayaran ticketmu dengan link : ${payUrl}`, // plain text body
-    html: "&lt;b&gt;Hello world?&lt;/b&gt;", // html body
-  });
+    attachments:[{
+      path:outputPdf
+    }]
+  }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  console.log("Message sent: %s", info.messageId);</span>
-  // Message sent: &lt;b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com&gt;
 &nbsp;
-  // Preview only available when sending through an Ethereal account
-<span class="cstat-no" title="statement not covered" >  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));</span>
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  await transporter.sendMail(message)
+  const output = {
+    message : 'Success Send Message'
+  }
+&nbsp;
+  return output
 }
 &nbsp;
 module.exports = processPayment</pre></td></tr></table></pre>
@@ -175,7 +181,7 @@ module.exports = processPayment</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-08T17:13:03.757Z
+                at 2022-11-09T10:44:51.145Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

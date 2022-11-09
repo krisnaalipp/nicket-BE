@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
+const processPayment = require('../helpers/nodemailer');
 const { Match, sequelize, Transaction, Seat } = require('../models');
 const { queryInterface } = sequelize
 
@@ -678,6 +679,11 @@ describe('Test endpoint match', () => {
           return done();
         })
     })
+    test('function node mailer', async () => {
+      const url = 'www.google.com'
+      const output = await processPayment(url,'iqbalcjr22@gmail.com')
+      expect(output).toHaveProperty("message")
+    });
   })
   
 })
