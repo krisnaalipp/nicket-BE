@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     MatchId: DataTypes.INTEGER,
+    paymentUrl : DataTypes.STRING,
     ticketPrice: DataTypes.INTEGER,
     amount: DataTypes.INTEGER
   },

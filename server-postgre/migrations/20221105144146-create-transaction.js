@@ -34,6 +34,9 @@ module.exports = {
       amount: {
         type: Sequelize.INTEGER
       },
+      paymentUrl: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
