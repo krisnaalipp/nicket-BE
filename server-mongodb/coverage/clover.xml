@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1667877636683" clover="3.2.0">
-  <project timestamp="1667877636683" name="All files">
-    <metrics statements="142" coveredstatements="138" conditionals="18" coveredconditionals="18" methods="18" coveredmethods="17" elements="178" coveredelements="173" complexity="0" loc="142" ncloc="142" packages="5" files="10" classes="10"/>
+<coverage generated="1667927875933" clover="3.2.0">
+  <project timestamp="1667927875933" name="All files">
+    <metrics statements="142" coveredstatements="142" conditionals="18" coveredconditionals="18" methods="18" coveredmethods="18" elements="178" coveredelements="178" complexity="0" loc="142" ncloc="142" packages="5" files="10" classes="10"/>
     <package name="server-mongodb">
       <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.js" path="C:\Users\lenovo\Documents\Hacktiv8\PHASE-3\nribun-BE\server-mongodb\app.js">
@@ -17,7 +17,7 @@
       </file>
     </package>
     <package name="server-mongodb.controllers">
-      <metrics statements="77" coveredstatements="73" conditionals="16" coveredconditionals="16" methods="12" coveredmethods="11"/>
+      <metrics statements="77" coveredstatements="77" conditionals="16" coveredconditionals="16" methods="12" coveredmethods="12"/>
       <file name="adminController.js" path="C:\Users\lenovo\Documents\Hacktiv8\PHASE-3\nribun-BE\server-mongodb\controllers\adminController.js">
         <metrics statements="45" coveredstatements="45" conditionals="12" coveredconditionals="12" methods="6" coveredmethods="6"/>
         <line num="1" count="2" type="stmt"/>
@@ -67,16 +67,16 @@
         <line num="82" count="2" type="stmt"/>
       </file>
       <file name="newsController.js" path="C:\Users\lenovo\Documents\Hacktiv8\PHASE-3\nribun-BE\server-mongodb\controllers\newsController.js">
-        <metrics statements="32" coveredstatements="28" conditionals="4" coveredconditionals="4" methods="6" coveredmethods="5"/>
+        <metrics statements="32" coveredstatements="32" conditionals="4" coveredconditionals="4" methods="6" coveredmethods="6"/>
         <line num="1" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
         <line num="23" count="6" type="stmt"/>
         <line num="24" count="6" type="stmt"/>
         <line num="28" count="6" type="stmt"/>

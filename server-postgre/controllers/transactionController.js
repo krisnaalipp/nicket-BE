@@ -83,10 +83,9 @@ class Controller {
           "bca_va","gopay"],
       }
       const transaction = await snap.createTransaction(parameter)
-      // await processPayment(transaction.redirect_url)
+      await processPayment(transaction.redirect_url,availTransaction.email)
       res.status(201).json({ transactionToken: transaction.token })
     } catch (error) {
-      console.log(error)
       next(error)
     }
   }
@@ -94,12 +93,21 @@ class Controller {
   static async paymentHandler(req,res,next){
     try {
       const {TransactionId} = req.body
+      console.log(req.body)
       if(req.body.transaction_status =="capture" || req.body.transaction_status =="settlement" ){
         const updatePaid = await Transaction.update({isPaid : true},{
           where : {
             id : TransactionId
+          },
+          returning:true
+        })
+        await Match.decrement('availableSeats',{
+          by: updatePaid[1][0].dataValues.amount,
+          where : {
+            id : updatePaid[1][0].dataValues.MatchId
           }
         })
+        // console.log(updatePaid[1][0].dataValues)
         res.status(200).json({message : 'OK'})
       }else {
         res.status(400).json({message:'Something Wrong'})

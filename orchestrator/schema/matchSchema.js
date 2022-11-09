@@ -44,7 +44,6 @@ const matchResolvers = {
   Query : {
     getMatch : async() => {
       try {
-        await redis.del('match:cache')
         let matchCache = await redis.get('match:cache')
         if(matchCache){
           const data = JSON.parse(matchCache)

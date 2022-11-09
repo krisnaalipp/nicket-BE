@@ -365,8 +365,8 @@ describe('Test endpoint match', () => {
         })
     })
   })
-  describe('Get all /match', () => {
-    test('Succes read match , status code 200', () => {
+  describe('Get all /Transaction', () => {
+    test('Succes read Transaction , status code 200', () => {
       return (
         request(app)
           .get('/order')
@@ -381,6 +381,30 @@ describe('Test endpoint match', () => {
       jest.spyOn(Transaction, "findAll").mockRejectedValue(new Error("test error"))
       request(app)
         .get('/order')
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(500);
+          return done();
+        })
+    })
+  })
+  describe('Get all /order/match', () => {
+    test('Succes read Transaction by Match , status code 200', () => {
+      return (
+        request(app)
+          .get('/order/match/1')
+          .then((response) => {
+            expect(response.statusCode).toBe(200)
+            expect(response.body.length).toBeGreaterThan(0);
+            expect(Array.isArray(response.body)).toBeTruthy()
+          })
+      )
+    })
+    test('Failed read match , status code 500', (done) => {
+      jest.spyOn(Transaction, "findAll").mockRejectedValue(new Error("test error"))
+      request(app)
+        .get('/order/match/1')
         .end((err, res) => {
           if (err) return done(err);
           const { body, status } = res;
@@ -615,9 +639,44 @@ describe('Test endpoint match', () => {
         });
     })
   })
-  describe('POSTT /order/payment',()=> {
-    test('200 Success update payment handle - should update status transaction',async()=> {
-
+  describe('POST /order/payment',()=> {
+    test('Success update Transaction , status code 201', (done) => {
+      request(app)
+        .post('/order/payment')
+        .send({TransactionId:2,transaction_status:'settlement'})
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(200);
+          expect(body).toEqual(expect.any(Object));
+          expect(body).toHaveProperty("message");
+          return done();
+        });
+    })
+    test('Failed update Transaction , status code 400', (done) => {
+      request(app)
+        .post('/order/payment')
+        .send({TransactionId:2})
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(400);
+          expect(body).toEqual(expect.any(Object));
+          expect(body).toHaveProperty("message");
+          return done();
+        });
+    })
+    test('Failed update Transaction , status code 500', (done) => {
+      jest.spyOn(Transaction, "update").mockRejectedValue(new Error("test error"))
+      request(app)
+        .post('/order/payment')
+        .send({TransactionId:2,transaction_status:'settlement'})
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(500);
+          return done();
+        })
     })
   })
   
