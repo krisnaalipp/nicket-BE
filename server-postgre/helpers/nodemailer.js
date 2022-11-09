@@ -21,7 +21,7 @@ async function processPayment(payUrl,customerEmail) {
 
   let message = {
     from: '"Admin Nicket" <admnicket8@gmail.com>', // sender address
-    to: 'dam.n8910@gmail.com', // list of receivers
+    to: customerEmail, // list of receivers
     subject: "Menunggu Pembayaran", // Subject line
     text: `Segera lakukan pembayaran ticketmu dengan link : ${payUrl}`, // plain text body
     attachments:[{

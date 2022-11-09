@@ -66,7 +66,8 @@ class Controller {
       if(!availTransaction){
         throw {name : 'Transaction Not Found'}
       }
-      let order_id = `${availTransaction.email}-${availTransaction.categorySeat}-${availTransaction.ticketPrice}`
+      const randomOrder =  Math.floor(Math.random()*1000)
+      let order_id = `${randomOrder}-${availTransaction.email}-${availTransaction.categorySeat}-${availTransaction.ticketPrice}`
       let snap = new midtransClient.Snap({
         isProduction: false,
         serverKey: 'SB-Mid-server-Q-5hHH0OgKqNO5y8JB5HPh6j',
