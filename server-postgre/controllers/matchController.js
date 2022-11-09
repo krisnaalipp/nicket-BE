@@ -3,7 +3,9 @@ const {Match} = require('../models');
 class Controller {
   static async allMatch(req,res,next){
     try {
-      const matches = await Match.findAll()
+      const matches = await Match.findAll({
+        order :[['startDate','ASC']],
+      })
       res.status(200).json(matches)
     } catch (error) {
       next(error)
@@ -20,7 +22,6 @@ class Controller {
       })
       res.status(200).json(matches[0])
     } catch (error) {
-      console.log(error)
       next(error)
     }
   }
@@ -33,7 +34,6 @@ class Controller {
       }
       res.status(200).json(match)
     } catch (error) {
-      console.log(error)
       next(error)
     }
   }

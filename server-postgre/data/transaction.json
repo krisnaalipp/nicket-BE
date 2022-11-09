@@ -1,0 +1,34 @@
+[
+  {
+    "ktp": "3526751787590009",
+    "email": "payman601@gmail.com",
+    "categorySeat": "Reguler 1",
+    "ticketPrice": 150000,
+    "isPaid": true,
+    "MatchId": 6
+  },
+  {
+    "ktp": "3526751787590009",
+    "email": "payman601@gmail.com",
+    "categorySeat": "Reguler 2",
+    "isPaid": true,
+    "ticketPrice": 150000,
+    "MatchId": 6
+  },
+  {
+    "ktp": "3526751787590009",
+    "email": "payman601@gmail.com",
+    "categorySeat": "Reguler 3",
+    "isPaid": true,
+    "ticketPrice": 150000,
+    "MatchId": 6
+  },
+  {
+    "ktp": "3526751787590009",
+    "email": "payman601@gmail.com",
+    "categorySeat": "VIP",
+    "ticketPrice": 200000,
+    "isPaid": true,
+    "MatchId": 6
+  }
+]

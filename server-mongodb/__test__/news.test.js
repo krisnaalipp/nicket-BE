@@ -53,6 +53,20 @@ describe ('test endpoint news', ()=> {
       expect(res.body).toEqual('failed test get data')
     })
   })
+  describe('get /news/limit', ()=> {
+    test('success get data', async ()=> {
+      const news = await News.create(inputNews())
+      const res = await request(app).get('/news/limit')
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.length).toBeGreaterThan(0);
+    })
+    test('failed get data' , async()=> {
+      jest.spyOn(News,'find').mockRejectedValue(new Error('failed test get data'))
+      const res = await request(app).get('/news/limit')
+      expect(res.statusCode).toEqual(500)
+      expect(res.body).toEqual('failed test get data')
+    })
+  })
   describe('get /news/:newsId',()=> {
     test('succes get news by id', async ()=> {
       const news = await News.create(inputNews())
