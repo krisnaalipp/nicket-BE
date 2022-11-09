@@ -32,12 +32,14 @@
   {
     "opponent" : "Southampton",
     "opponentLogo" : "https://resources.premierleague.com/premierleague/badges/70/t20.png",
-    "startDate":"2022-11-11"
+    "startDate":"2022-11-11",
+    "availableSeats": 440
   },
   {
     "opponent" : "Chelsea",
     "opponentLogo" : "https://resources.premierleague.com/premierleague/badges/70/t8.png",
-    "startDate":"2022-11-18"
+    "startDate":"2022-11-18",
+    "availableSeats": 460
   },
   {
     "opponent" : "Leicester City",
