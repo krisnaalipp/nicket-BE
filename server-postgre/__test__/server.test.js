@@ -613,6 +613,7 @@ describe('Test endpoint match', () => {
     })
   })
   describe('Post /order' , ()=> {
+    jest.setTimeout(20000)
     test('Success add Order , status code 201', (done) => {
       request(app)
         .post('/order')
@@ -680,8 +681,32 @@ describe('Test endpoint match', () => {
         })
     })
     test('function node mailer', async () => {
+     
       const url = 'www.google.com'
-      const output = await processPayment(url,'iqbalcjr22@gmail.com')
+      const output = await processPayment(url,'iqbalcjr22@gmail.com',{
+        id:1,
+        email:'iqbalcjr22@gmail.com',
+        categorySeat:'VIP',
+        isPaid:false,
+        ticketPrice:150000,
+        amount:3,
+        updateAt:'"2022-11-08T16:11:33.398Z"',
+        macth:'Chelsea'
+      })
+      expect(output).toHaveProperty("message")
+    });
+    test('function node mailer', async () => {
+      const url = 'www.google.com'
+      const output = await processPayment(url,'iqbalcjr22@gmail.com',{
+        id:1,
+        email:'iqbalcjr22@gmail.com',
+        categorySeat:'VIP',
+        isPaid:true,
+        ticketPrice:150000,
+        amount:3,
+        updateAt:'"2022-11-08T16:11:33.398Z"',
+        macth:'Chelsea'
+      })
       expect(output).toHaveProperty("message")
     });
   })
