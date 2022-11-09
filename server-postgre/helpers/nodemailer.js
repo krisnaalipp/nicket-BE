@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const { createPDF } = require("./pdfjs");
 
 
-async function processPayment(payUrl,customerEmail) {
+async function processPayment(payUrl,customerEmail,pdfTransaction) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
 
@@ -17,11 +17,11 @@ async function processPayment(payUrl,customerEmail) {
     },
   });
 
-  let outputPdf = await createPDF(payUrl)
+  let outputPdf = await createPDF(payUrl,pdfTransaction)
 
   let message = {
     from: '"Admin Nicket" <admnicket8@gmail.com>', // sender address
-    to: 'dam.n8910@gmail.com', // list of receivers
+    to: customerEmail, // list of receivers
     subject: "Menunggu Pembayaran", // Subject line
     text: `Segera lakukan pembayaran ticketmu dengan link : ${payUrl}`, // plain text body
     attachments:[{

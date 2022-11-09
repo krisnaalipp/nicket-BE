@@ -82,10 +82,25 @@ class Controller {
         enabled_payments: ["credit_card","bca_klikbca", "bca_klikpay", "permata_va",
           "bca_va","gopay"],
       }
+      let pdfTransaction = await Transaction.findByPk(transactionId,{
+        include : [Match]
+      })
+      pdfTransaction = pdfTransaction.dataValues
+      let result = {
+        id:pdfTransaction.id,
+        email:pdfTransaction.email,
+        categorySeat:pdfTransaction.categorySeat,
+        isPaid:pdfTransaction.isPaid,
+        ticketPrice:pdfTransaction.ticketPrice,
+        amount:pdfTransaction.amount,
+        updateAt:pdfTransaction.updatedAt,
+        macth:pdfTransaction.Match.dataValues.opponent
+      }
       const transaction = await snap.createTransaction(parameter)
-      await processPayment(transaction.redirect_url,availTransaction.email)
+      await processPayment(transaction.redirect_url,availTransaction.email,result)
       res.status(201).json({ transactionToken: transaction.token })
     } catch (error) {
+      console.log(error);
       next(error)
     }
   }
