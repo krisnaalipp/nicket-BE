@@ -132,10 +132,13 @@ class Controller {
             id : updatePaid[1][0].dataValues.MatchId
           }
         })
-        let pdfTransaction = await Transaction.findByPk(TransactionId,{
-          include : [Match]
+        let pdfTransaction = await Transaction.findByPk(transactionId,{
+          include : [Match,Seat]
         })
         pdfTransaction = pdfTransaction.dataValues
+        let seat =  pdfTransaction.Seats.map(e => {
+          return e.seatNumber
+        })
         let result = {
           id:pdfTransaction.id,
           email:pdfTransaction.email,
@@ -144,7 +147,8 @@ class Controller {
           ticketPrice:pdfTransaction.ticketPrice,
           amount:pdfTransaction.amount,
           updateAt:pdfTransaction.updatedAt,
-          macth:pdfTransaction.Match.dataValues.opponent
+          macth:pdfTransaction.Match.dataValues.opponent,
+          seats:seat
         }
         await processPayment(pdfTransaction.paymentUrl,pdfTransaction.email,result)
         res.status(200).json({message : 'OK'})
