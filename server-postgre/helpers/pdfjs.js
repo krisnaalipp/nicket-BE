@@ -24,14 +24,6 @@ const createPDF = async (url,data) => {
 
   doc.setFontSize(14);
   doc.text(`Bill to : ${data.email}`, 10, 50);
-  let pay = 'belum dibayar'
-  if (data.isPaid) {
-    pay= 'sudah dibayar'
-    doc.setFont("courier", "normal");  
-    doc.setFontSize(100)
-    doc.text("LUNAS",110,130,null,35)
-  }
-
 
   doc.setFontSize(20);
   doc.text(`Invoice #A-${data.id}`, 250, 50);
@@ -44,8 +36,8 @@ const createPDF = async (url,data) => {
   
   doc.setFontSize(14);
   doc.text("Tiket Macth", 31, 75);
-  doc.text("Seat", 91, 75);
-  doc.text("Amount", 131, 75);
+  doc.text("Category", 91, 75);
+  doc.text("Seats", 131, 75);
   doc.text("Price", 181, 75);
   doc.text("Total",241,75)
  
@@ -53,8 +45,8 @@ const createPDF = async (url,data) => {
   doc.line(280, 80, 10, 81);
   
   doc.text(`${data.macth}`, 31, 93);
-  doc.text(`${data.seats.join(' ')}`, 91, 93);
-  doc.text(`${data.amount}`, 139, 93);
+  doc.text(`${data.categorySeat}`, 91, 93);
+  doc.text(`${data.seats.join(' ')}`, 139, 93);
   doc.text(`RP.${data.ticketPrice}`, 171, 93);
   
   // total 
