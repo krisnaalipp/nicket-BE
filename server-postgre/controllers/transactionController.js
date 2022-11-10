@@ -132,7 +132,7 @@ class Controller {
             id : updatePaid[1][0].dataValues.MatchId
           }
         })
-        let pdfTransaction = await Transaction.findByPk(transactionId,{
+        let pdfTransaction = await Transaction.findByPk(TransactionId,{
           include : [Match,Seat]
         })
         pdfTransaction = pdfTransaction.dataValues
