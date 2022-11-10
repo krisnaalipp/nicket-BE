@@ -24,14 +24,6 @@ const createPDF = async (url,data) => {
 
   doc.setFontSize(14);
   doc.text(`Bill to : ${data.email}`, 10, 50);
-  let pay = 'belum dibayar'
-  if (data.isPaid) {
-    pay= 'sudah dibayar'
-    doc.setFont("courier", "normal");  
-    doc.setFontSize(100)
-    doc.text("LUNAS",110,130,null,35)
-  }
-
 
   doc.setFontSize(20);
   doc.text(`Invoice #A-${data.id}`, 250, 50);
@@ -73,9 +65,6 @@ const createPDF = async (url,data) => {
   
   doc.setLineWidth(0, 2);
   doc.line(280,130,220,130)
-//   doc.line(280, 70, 10, 71);
-
-//   doc.table(60, 80, generateData(100), headers, { autoSize: true });
 
   const pdfOutput = doc.output("datauristring");
 
