@@ -84,9 +84,12 @@ class Controller {
           "bca_va","gopay"],
       }
       let pdfTransaction = await Transaction.findByPk(transactionId,{
-        include : [Match]
+        include : [Match,Seat]
       })
       pdfTransaction = pdfTransaction.dataValues
+      let seat =  pdfTransaction.Seats.map(e => {
+        return e.seatNumber
+      })
       let result = {
         id:pdfTransaction.id,
         email:pdfTransaction.email,
@@ -95,7 +98,8 @@ class Controller {
         ticketPrice:pdfTransaction.ticketPrice,
         amount:pdfTransaction.amount,
         updateAt:pdfTransaction.updatedAt,
-        macth:pdfTransaction.Match.dataValues.opponent
+        macth:pdfTransaction.Match.dataValues.opponent,
+        seats:seat
       }
       const transaction = await snap.createTransaction(parameter)
       await Transaction.update({paymentUrl : transaction.redirect_url},{

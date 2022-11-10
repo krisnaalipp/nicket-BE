@@ -53,7 +53,7 @@ const createPDF = async (url,data) => {
   doc.line(280, 80, 10, 81);
   
   doc.text(`${data.macth}`, 31, 93);
-  doc.text(`${data.categorySeat}`, 91, 93);
+  doc.text(`${data.seats.join(' ')}`, 91, 93);
   doc.text(`${data.amount}`, 139, 93);
   doc.text(`RP.${data.ticketPrice}`, 171, 93);
   
