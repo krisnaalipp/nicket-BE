@@ -65,9 +65,6 @@ const createPDF = async (url,data) => {
   
   doc.setLineWidth(0, 2);
   doc.line(280,130,220,130)
-//   doc.line(280, 70, 10, 71);
-
-//   doc.table(60, 80, generateData(100), headers, { autoSize: true });
 
   const pdfOutput = doc.output("datauristring");
 
