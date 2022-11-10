@@ -10,48 +10,6 @@ const createPDF = async (url,data) => {
   // Create qrCode
   let qrCode = await QRCode.toDataURL(url);
 
-//   var generateData = function (amount) {           
-//     var result = [];
-//     var data = {
-//       coin: "100",
-//       game_group: "GameGroup",
-//       game_name: "XPTO2",
-//       game_version: "25",
-//       machine: "20485861",
-//       vlt: "0",
-//     };
-//     for (var i = 0; i < 5; i += 1) {
-//       data.id = (i + 1).toString();
-//       result.push(Object.assign({}, data));
-//     }
-//     return result;
-//   };
-
-//   function createHeaders(keys) {
-//     var result = [];
-//     for (var i = 0; i < keys.length; i += 1) {
-//       result.push({
-//         id: keys[i],
-//         name: keys[i],
-//         prompt: keys[i],
-//         width: 65,
-//         align: "center",
-//         padding: 0,
-//       });
-//     }
-//     return result;
-//   }
-
-//   var headers = createHeaders([
-//     "id",
-//     "coin",
-//     "game_group",
-//     "game_name",
-//     "game_version",
-//     "machine",
-//     "vlt",
-//   ]);
-
   doc.addImage("https://media.discordapp.net/attachments/1035515386172543087/1038008127443968030/logo.png", "JPEG", 240, 0, 40, 40);
   doc.addImage(qrCode, "JPEG", 40, 120, 60, 60);
   doc.setFontSize(40);
@@ -73,7 +31,7 @@ const createPDF = async (url,data) => {
     doc.setFontSize(100)
     doc.text("LUNAS",110,130,null,35)
   }
-  doc.text(`Status : ${pay}`,10,58)
+
 
   doc.setFontSize(20);
   doc.text(`Invoice #A-${data.id}`, 250, 50);
