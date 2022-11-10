@@ -36,8 +36,8 @@ const createPDF = async (url,data) => {
   
   doc.setFontSize(14);
   doc.text("Tiket Macth", 31, 75);
-  doc.text("Seat", 91, 75);
-  doc.text("Amount", 131, 75);
+  doc.text("Category", 91, 75);
+  doc.text("Seats", 131, 75);
   doc.text("Price", 181, 75);
   doc.text("Total",241,75)
  
@@ -46,7 +46,7 @@ const createPDF = async (url,data) => {
   
   doc.text(`${data.macth}`, 31, 93);
   doc.text(`${data.categorySeat}`, 91, 93);
-  doc.text(`${data.amount}`, 139, 93);
+  doc.text(`${data.seats.join(' ')}`, 139, 93);
   doc.text(`RP.${data.ticketPrice}`, 171, 93);
   
   // total 
