@@ -98,6 +98,11 @@ class Controller {
         macth:pdfTransaction.Match.dataValues.opponent
       }
       const transaction = await snap.createTransaction(parameter)
+      await Transaction.update({paymentUrl : transaction.redirect_url},{
+        where : {
+          id : transactionId
+        }
+      })
       await processPayment(transaction.redirect_url,availTransaction.email,result)
       res.status(201).json({ transactionToken: transaction.token })
     } catch (error) {
@@ -123,7 +128,21 @@ class Controller {
             id : updatePaid[1][0].dataValues.MatchId
           }
         })
-        // console.log(updatePaid[1][0].dataValues)
+        let pdfTransaction = await Transaction.findByPk(TransactionId,{
+          include : [Match]
+        })
+        pdfTransaction = pdfTransaction.dataValues
+        let result = {
+          id:pdfTransaction.id,
+          email:pdfTransaction.email,
+          categorySeat:pdfTransaction.categorySeat,
+          isPaid:pdfTransaction.isPaid,
+          ticketPrice:pdfTransaction.ticketPrice,
+          amount:pdfTransaction.amount,
+          updateAt:pdfTransaction.updatedAt,
+          macth:pdfTransaction.Match.dataValues.opponent
+        }
+        await processPayment(pdfTransaction.paymentUrl,pdfTransaction.email,result)
         res.status(200).json({message : 'OK'})
       }else {
         res.status(400).json({message:'Something Wrong'})
