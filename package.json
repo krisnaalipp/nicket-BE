@@ -1,0 +1,26 @@
+{
+  "name": "nribun-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krisnaalipp/nribun-BE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krisnaalipp/nribun-BE/issues"
+  },
+  "homepage": "https://github.com/krisnaalipp/nribun-BE#readme",
+  "dependencies": {
+    "easyinvoice": "^2.3.3",
+    "easypdf-io": "^1.0.12",
+    "jspdf": "^2.5.1",
+    "qrcode": "^1.5.1"
+  }
+}

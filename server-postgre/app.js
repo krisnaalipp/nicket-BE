@@ -11,5 +11,11 @@ app.use(express.json())
 app.use('/',router)
 app.use(errorHandler)
 
+const port = 4003
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 
 module.exports = app
